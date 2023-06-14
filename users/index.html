@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Users</h1>
+      <div class="action-bar">
+        <a href="create.html" class="outline button" role="button">+</a>
+      </div>
+      <table role="grid">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Company Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody"></tbody>
+      </table>
+    </main>
+    <script>
+      "use strict";
+      let usersTbody = document.querySelector("#users-tbody");
+      function fetchUsers() {
+        fetch("http://localhost:3000/users")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (users) {
+            users.forEach(buildUserTableRow);
+          });
+      }
+      fetchUsers();
+
+      function buildUserTableRow(user) {
+        let row = document.createElement("tr");
+        usersTbody.appendChild(row);
+
+        let cell1 = document.createElement("td");
+        cell1.innerText = user.name;
+        row.appendChild(cell1);
+
+        let cell2 = document.createElement("td");
+        cell2.innerText = user.username;
+        row.appendChild(cell2);
+
+        let cell3 = document.createElement("td");
+        cell3.innerText = user.email;
+        row.appendChild(cell3);
+
+        let cell4 = document.createElement("td");
+        cell4.innerText = user.phone;
+        row.appendChild(cell4);
+
+        let cell5 = document.createElement("td");
+        if (user.company) {
+          cell5.innerText = user.company.name;
+        }
+        row.appendChild(cell5);
+
+        let cell6 = document.createElement("td");
+
+        let anchorEdit = document.createElement("a");
+
+        anchorEdit.href = `edit.html?userId=${user.id}`;
+        anchorEdit.innerText = "Edit";
+        cell6.appendChild(anchorEdit);
+
+        row.appendChild(cell6);
+      }
+    </script>
+  </body>
+</html>

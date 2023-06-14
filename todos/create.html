@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Todos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body>
+    <main class="container">
+        <article>
+            <hgroup>
+                <h1>Create Todos</h1>
+                <h2>Create a new Todos</h2>
+            </hgroup>
+            <form onsubmit="handleSubmit(event);">
+                <div class="grid">
+                    <label for="id">Id
+                        <input type="text" id="id" name="id" />
+                    </label>
+
+                </div>
+                <div class="grid">
+                    <label for="title">Title
+                        <input type="text" id="title" name="title" />
+                    </label>
+
+                    <label for="completed">Completed
+                        <input type="text" id="completed" name="completed" />
+                    </label>
+
+                </div>
+                <div class="action-bar">
+
+                    <span></span>
+                    <span></span>
+                    <button type="submit" role="button">Save</button>
+                    <a href="index.html" class="cancel contrast outline" role="button">Cancel</a>
+                </div>
+            </form>
+        </article>
+    </main>
+    <script>
+        "use strict";
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            let todos = {
+                id: document.querySelector("#id").value,
+                title: document.querySelector("#title").value,
+                completed: document.querySelector("#completed").value,
+
+            };
+
+            // let form = e.target;
+            // let formData = new FormData(form);
+            // let user = Object.fromEntries(formData.entries());
+            // console.log(user);
+
+            fetch("http://localhost:3000/todos", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(todos),
+            })
+                .then(function (response) {
+                    console.log(response.status, response.statusText);
+                    return response.json();
+                })
+                .then(function (todos) {
+                    console.log(todos);
+                    window.location.replace("index.html");
+                });
+        }
+    </script>
+</body>
+
+</html>

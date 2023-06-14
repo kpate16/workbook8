@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit User</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <main class="container">
+        <article>
+            <h1>Edit User</h1>
+
+            <form onsubmit="handleSubmit(event);">
+                <div class="grid">
+                    <label for="name">Name
+                        <input type="text" id="name" name="name" />
+                    </label>
+
+                    <label for="username">Username
+                        <input type="text" id="username" name="username" />
+                    </label>
+                </div>
+                <div class="grid">
+                    <label for="email">Email
+                        <input type="email" id="email" name="email" />
+                    </label>
+
+                    <label for="phone">Phone
+                        <input type="text" id="phone" name="phone" />
+                    </label>
+                </div>
+                <div class="action-bar">
+                    <div></div>
+                    <button type="submit">Save</button>
+                    <a href="index.html" class="cancel contrast outline" role="button">cancel</a>
+                </div>
+            </form>
+        </article>
+    </main>
+    <script>
+        "use strict";
+        const nameInput = document.querySelector("#name");
+        const usernameInput = document.querySelector("#username");
+        const emailInput = document.querySelector("#email");
+        const phoneInput = document.querySelector("#phone");
+
+        function getUserId() {
+            const searchParameters = new URLSearchParams(window.location.search);
+            if (!searchParameters.has("userId")) {
+                throw new Error("No User ID provided.");
+            }
+            const userId = searchParameters.get("userId");
+            return userId;
+        }
+
+        function loadPage() {
+            const userId = getUserId();
+            fetch(`http://localhost:3000/users/${userId}`)
+                .then(function (response) {
+                    console.log(response.status, response.statusText);
+                    return response.json();
+                })
+                .then(function (user) {
+                    nameInput.value = user.name;
+                    usernameInput.value = user.username;
+                    emailInput.value = user.email;
+                    phoneInput.value = user.phone;
+                });
+        }
+        loadPage();
+        function handleSubmit(e) {
+            e.preventDefault();
+            let user = {
+                name: nameInput.value,
+                username: usernameInput.value,
+                email: emailInput.value,
+                phone: phoneInput.value,
+            };
+            const userId = getUserId();
+            fetch(`http://localhost:3000/users/${userId}`, {
+                method: "PUT",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(user),
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (user) {
+                    window.location.replace("index.html");
+                });
+        }
+    </script>
+</body>
+
+</html>

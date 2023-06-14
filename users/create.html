@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create User</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <main class="container">
+    <article>
+      <hgroup>
+        <h1>User</h1>
+        <h2>Create a new user</h2>
+      </hgroup>
+      <form onsubmit="handleSubmit(event);">
+        <div class="grid">
+          <label for="name">Name
+            <input type="text" id="name" name="name" />
+          </label>
+
+          <label for="username">Username
+            <input type="text" id="username" name="username" />
+          </label>
+        </div>
+        <div class="grid">
+          <label for="email">Email
+            <input type="email" id="email" name="email" />
+          </label>
+
+          <label for="phone">Phone
+            <input type="text" id="phone" name="phone" />
+          </label>
+        </div>
+        <div class="action-bar">
+          <span></span>
+          <span></span>
+          <button type="submit" role="button">Save</button>
+          <a href="index.html" class="cancel contrast outline" role="button">Cancel</a>
+        </div>
+      </form>
+    </article>
+  </main>
+  <script>
+    "use strict";
+
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      let user = {
+        name: document.querySelector("#name").value,
+        username: document.querySelector("#username").value,
+        email: document.querySelector("#email").value,
+        phone: document.querySelector("#phone").value,
+      };
+
+      fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(user),
+      })
+        .then(function (response) {
+          console.log(response.status, response.statusText);
+          return response.json();
+        })
+        .then(function (user) {
+          console.log(user);
+          window.location.replace("index.html");
+        });
+    }
+  </script>
+</body>
+
+</html>

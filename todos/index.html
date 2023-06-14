@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body>
+    <main class="container">
+        <h1>Todos</h1>
+        <div class="action-bar">
+            <a href="create.html" class="outline button" role="button">Add +</a>
+        </div>
+
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+            <tbody id="todos-tbody"></tbody>
+        </table>
+    </main>
+    <script>
+        "use strict";
+        let todosTbody = document.querySelector("#todos-tbody");
+        function fetchUsers() {
+            fetch("http://localhost:3000/todos")
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (users) {
+                    users.forEach(buildTodosTableRow);
+                });
+        }
+        fetchUsers();
+
+        function buildTodosTableRow(todos) {
+            let row = document.createElement("tr");
+            todosTbody.appendChild(row);
+
+            let cell1 = document.createElement("td");
+            cell1.innerText = todos.id;
+            row.appendChild(cell1);
+
+            let cell2 = document.createElement("td");
+            cell2.innerText = todos.title;
+            row.appendChild(cell2);
+
+            let cell3 = document.createElement("td");
+            cell3.innerText = todos.completed;
+            row.appendChild(cell3);
+
+            let cell4 = document.createElement("td");
+
+            let anchorEdit = document.createElement("a");
+
+            anchorEdit.href = `edit.html?todosId=${todos.id}`;
+            anchorEdit.innerText = "Edit";
+            cell4.appendChild(anchorEdit);
+
+            row.appendChild(cell4);
+
+
+
+            
+        }
+    </script>
+</body>
+
+</html>

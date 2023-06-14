@@ -1,0 +1,9 @@
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.cancel {
+  margin-left: 1em;
+}
