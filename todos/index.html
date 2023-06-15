@@ -13,21 +13,23 @@
 
 <body>
     <main class="container">
-        <h1>Todos</h1>
-        <div class="action-bar">
-            <a href="create.html" class="outline button" role="button">Add +</a>
-        </div>
+        <article>
+            <h1>Todos</h1>
+            <div class="action-bar">
+                <a href="create.html" class="outline button" role="button">Add +</a>
+            </div>
 
-        <table role="grid">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Completed</th>
-                </tr>
-            </thead>
-            <tbody id="todos-tbody"></tbody>
-        </table>
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Completed</th>
+                    </tr>
+                </thead>
+                <tbody id="todos-tbody"></tbody>
+            </table>
+        </article>
     </main>
     <script>
         "use strict";
@@ -64,14 +66,19 @@
             let anchorEdit = document.createElement("a");
 
             anchorEdit.href = `edit.html?todosId=${todos.id}`;
-            anchorEdit.innerText = "Edit";
+            anchorEdit.innerText = "Edit ";
             cell4.appendChild(anchorEdit);
 
+            let anchorDelete = document.createElement("a");
+            anchorDelete.href = `confirm-delete.html?Id=${todos.id}`;
+            anchorDelete.innerText = " ||   Delete";
+            cell4.appendChild(anchorDelete);
             row.appendChild(cell4);
 
 
 
-            
+
+
         }
     </script>
 </body>

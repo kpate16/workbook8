@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit todos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <main class="container">
+        <article>
+            <h1>Delete Todos</h1>
+
+            <form onsubmit="handleSubmit(event);">
+                <div class="grid">
+                    <h3> Are you Sure you want to delete below record?</h3>
+
+                </div>
+                <div class="grid">
+                    <label for="id">Id
+                        <input type="text" id="id" name="id" disabled />
+                    </label>
+                    <label for="title">Title
+                        <input type="text" id="title" name="title" disabled />
+                    </label>
+
+                    <label for="completed">Completed
+                        <input type="text" id="completed" name="completed" disabled />
+                    </label>
+                </div>
+                <div class="action-bar">
+                    <div></div>
+                    <button type="submit">Confirm Delete</button>
+                    <a href="index.html" class="cancel contrast outline" role="button">cancel</a>
+                </div>
+            </form>
+        </article>
+    </main>
+    <script>
+        "use strict";
+        const idInput = document.querySelector("#id");
+        const titleInput = document.querySelector("#title");
+        const completedInput = document.querySelector("#completed");
+
+        function getTodosId() {
+            const searchParameters = new URLSearchParams(window.location.search);
+            if (!searchParameters.has("Id")) {
+                throw new Error("No User ID provided.");
+            }
+            const todosId = searchParameters.get("Id");
+            return todosId;
+        }
+
+        function loadPage() {
+            const todosId = getTodosId();
+            fetch(`http://localhost:3000/todos/${todosId}`)
+                .then(function (response) {
+                    console.log(response.status, response.statusText);
+                    return response.json();
+                })
+                .then(function (todos) {
+                    idInput.value = todos.id;
+                    titleInput.value = todos.title;
+                    completedInput.value = todos.completed;
+
+                });
+        }
+        loadPage();
+        function handleSubmit(e) {
+            e.preventDefault();
+            let todos = {
+                id: idInput.value,
+                title: titleInput.value,
+                completed: completedInput.value,
+            };
+            const todosId = getTodosId();
+            fetch(`http://localhost:3000/todos/${todosId}`, {
+                method: "DELETE",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(todos),
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (todos) {
+                    window.location.replace("index.html");
+                });
+        }
+    </script>
+</body>
+
+</html>
