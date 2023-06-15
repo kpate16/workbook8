@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Courses Here</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body>
+    <main class="container">
+        <article>
+            <hgroup>
+                <h1>Create Courses</h1>
+                <h2>Create a new Courses</h2>
+            </hgroup>
+            <form onsubmit="handleSubmit(event);">
+                <div class="grid">
+                    <label for="id">Id
+                        <input type="text" id="id" name="id" />
+                    </label>
+
+                </div>
+                <div class="grid">
+                    <label for="dept">Department
+                        <input type="text" id="dept" name="dept" />
+                    </label>
+
+                    <label for="courseNum">CourseNum
+                        <input type="text" id="courseNum" name="courseNum" />
+                    </label>
+
+                </div>
+
+                <div class="grid">
+                    <label for="dept">CourseName
+                        <input type="text" id="courseName" name="courseName" />
+                    </label>
+
+                    <label for="instructor">Instructor
+                        <input type="text" id="instructor" name="instructor" />
+                    </label>
+
+                </div>
+
+                <div class="grid">
+                    <label for="startDate">StartDate
+                        <input type="text" id="startDate" name="startDate" />
+                    </label>
+
+                    <label for="numDays">NumOfDays
+                        <input type="text" id="numDays" name="numDays" />
+                    </label>
+
+                </div>
+                <div class="action-bar">
+
+                    <span></span>
+                    <span></span>
+                    <button type="submit" role="button">Save</button>
+                    <a href="index.html" class="cancel contrast outline" role="button">Cancel</a>
+                </div>
+            </form>
+        </article>
+    </main>
+    <script>
+        "use strict";
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            let courses = {
+                id: document.querySelector("#id").value,
+                dept: document.querySelector("#dept").value,
+                courseNum: document.querySelector("#courseNum").value,
+                courseName: document.querySelector("#courseName").value,
+                instructor: document.querySelector("#instructor").value,
+                startDate: document.querySelector("#startDate").value,
+                numDays: document.querySelector("#numDays").value,
+            };
+
+            fetch("http://localhost:3000/courses", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(courses),
+            })
+                .then(function (response) {
+                    console.log(response.status, response.statusText);
+                    return response.json();
+                })
+                .then(function (courses) {
+                    console.log(courses);
+                    window.location.replace("index.html");
+                });
+        }
+    </script>
+</body>
+
+</html>
