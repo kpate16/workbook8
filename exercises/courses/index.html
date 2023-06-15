@@ -45,8 +45,8 @@
                 .then(function (response) {
                     return response.json();
                 })
-                .then(function (users) {
-                    users.forEach(buildCoursesTableRow);
+                .then(function (courses) {
+                    courses.forEach(buildCoursesTableRow);
                 });
         }
         fetchUsers();
