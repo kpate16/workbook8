@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body>
+    <main class="container">
+        <article>
+            <h1>Courses</h1>
+            <div class="action-bar">
+                <a href="create.html" class="outline button" role="button">Add +</a>
+            </div>
+
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Department</th>
+                        <th>CourseNum</th>
+                        <th>CourseName</th>
+                        <th>Instructor</th>
+                        <th>StartDate</th>
+                        <th>NumOfDays</th>
+
+
+                    </tr>
+                </thead>
+                <tbody id="courses-tbody"></tbody>
+            </table>
+        </article>
+    </main>
+    <script>
+        "use strict";
+        let coursesTbody = document.querySelector("#courses-tbody");
+        function fetchUsers() {
+            fetch("http://localhost:3000/courses")
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (users) {
+                    users.forEach(buildCoursesTableRow);
+                });
+        }
+        fetchUsers();
+
+        function buildCoursesTableRow(courses) {
+            let row = document.createElement("tr");
+            coursesTbody.appendChild(row);
+
+            let cell1 = document.createElement("td");
+            cell1.innerText = courses.id;
+            row.appendChild(cell1);
+
+            let cell2 = document.createElement("td");
+            cell2.innerText = courses.dept;
+            row.appendChild(cell2);
+
+            let cell3 = document.createElement("td");
+            cell3.innerText = courses.courseNum;
+            row.appendChild(cell3);
+
+            let cell4 = document.createElement("td");
+            cell4.innerText = courses.courseName;
+            row.appendChild(cell4);
+
+            let cell5 = document.createElement("td");
+            cell5.innerText = courses.instructor;
+            row.appendChild(cell5);
+
+            let cell6 = document.createElement("td");
+            cell6.innerText = courses.startDate;
+            row.appendChild(cell6);
+
+            let cell7 = document.createElement("td");
+            cell7.innerText = courses.numDays;
+            row.appendChild(cell7);
+
+            let cell8 = document.createElement("td");
+
+            let anchorEdit = document.createElement("a");
+
+            anchorEdit.href = `edit.html?todosId=${courses.id}`;
+            anchorEdit.innerText = "Edit";
+            cell8.appendChild(anchorEdit);
+
+            let anchorDelete = document.createElement("a");
+            anchorDelete.href = `confirm-delete.html?Id=${courses.id}`;
+            anchorDelete.innerText = "|Delete";
+            cell8.appendChild(anchorDelete);
+            row.appendChild(cell8);
+
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>
