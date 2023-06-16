@@ -21,7 +21,7 @@
             <form onsubmit="handleSubmit(event);">
                 <div class="grid">
                     <label for="id">Id
-                        <input type="text" id="id" name="id" />
+                        <input type="text" id="id" name="id" disabled/>
                     </label>
 
                 </div>
@@ -93,7 +93,7 @@
                 })
                 .then(function (courses) {
                     console.log(courses);
-                    window.location.replace("index.html");
+                    window.location.replace(`index.html?coursesId=${courses.id}`);
                 });
         }
     </script>

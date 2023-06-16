@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delete Courses</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <main class="container">
+        <article>
+            <h1>Delete Courses</h1>
+
+            <form onsubmit="handleSubmit(event);">
+                <div class="grid">
+                    <h3> Are you Sure you want to delete below record?</h3>
+
+                </div>
+                <div class="grid">
+                    <label for="id">Id
+                        <input type="text" id="id" name="id" disabled />
+                    </label>
+
+                </div>
+                <div class="grid">
+                    <label for="dept">Department
+                        <input type="text" id="dept" name="dept" />
+                    </label>
+
+                    <label for="courseNum">CourseNum
+                        <input type="text" id="courseNum" name="courseNum" />
+                    </label>
+
+                </div>
+
+                <div class="grid">
+                    <label for="dept">CourseName
+                        <input type="text" id="courseName" name="courseName" />
+                    </label>
+
+                    <label for="instructor">Instructor
+                        <input type="text" id="instructor" name="instructor" />
+                    </label>
+
+                </div>
+
+                <div class="grid">
+                    <label for="startDate">StartDate
+                        <input type="text" id="startDate" name="startDate" />
+                    </label>
+
+                    <label for="numDays">NumOfDays
+                        <input type="text" id="numDays" name="numDays" />
+                    </label>
+
+                </div>
+                <div class="action-bar">
+                    <div></div>
+                    <button type="submit">Confirm Delete</button>
+                    <a href="index.html" class="cancel contrast outline" role="button">cancel</a>
+                </div>
+            </form>
+        </article>
+    </main>
+    <script>
+        "use strict";
+        const idInput = document.querySelector("#id");
+        const deptInput = document.querySelector("#dept");
+        const courseNumInput = document.querySelector("#courseNum");
+        const courseNameInput = document.querySelector("#courseName");
+        const instructorInput = document.querySelector("#instructor");
+        const startDateInput = document.querySelector("#startDate");
+        const numDaysInput = document.querySelector("#numDays");
+
+
+        function getCoursesId() {
+            const searchParameters = new URLSearchParams(window.location.search);
+            if (!searchParameters.has("coursesId")) {
+                throw new Error("No User ID provided.");
+            }
+            const coursesId = searchParameters.get("coursesId");
+            return coursesId;
+        }
+
+        function loadPage() {
+            const coursesId = getCoursesId();
+            fetch(`http://localhost:3000/courses/${coursesId}`)
+                .then(function (response) {
+                    console.log(response.status, response.statusText);
+                    return response.json();
+                })
+                .then(function (courses) {
+                    idInput.value = courses.id;
+                    deptInput.value = courses.dept;
+                    courseNumInput.value = courses.courseNum;
+                    courseNameInput.value = courses.courseName;
+                    instructorInput.value = courses.instructor;
+                    startDateInput.value = courses.startDate;
+                    numDaysInput.value = courses.numDays;
+
+
+                });
+        }
+        loadPage();
+        function handleSubmit(e) {
+            e.preventDefault();
+            let courses = {
+                id: idInput.value,
+                dept: deptInput.value,
+                courseNum: courseNumInput.value,
+                courseName: courseNameInput.value,
+                instructor: instructorInput.value,
+                startDate: startDateInput.value,
+                numDays: numDaysInput.value,
+            };
+            const coursesId = getCoursesId();
+            fetch(`http://localhost:3000/courses/${coursesId}`, {
+                method: "DELETE",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(courses),
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (courses) {
+                    window.location.replace("index.html");
+                });
+        }
+    </script>
+</body>
+
+</html>

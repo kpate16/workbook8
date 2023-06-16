@@ -12,13 +12,16 @@
 </head>
 
 <body>
-    <main class="container">
+    <main class="container-fluid">
         <article>
             <h1>Courses</h1>
+            <div class="grid" id="messagecontainer" class="primary">
+            </div>
+
+
             <div class="action-bar">
                 <a href="create.html" class="outline button" role="button">Add +</a>
             </div>
-
             <table role="grid">
                 <thead>
                     <tr>
@@ -29,6 +32,7 @@
                         <th>Instructor</th>
                         <th>StartDate</th>
                         <th>NumOfDays</th>
+                        <th>Actions</th>
 
 
                     </tr>
@@ -47,9 +51,24 @@
                 })
                 .then(function (courses) {
                     courses.forEach(buildCoursesTableRow);
+                    displayMessage();
                 });
         }
         fetchUsers();
+
+        function displayMessage() {
+            const searchParameters = new URLSearchParams(window.location.search);
+            if (searchParameters.has("coursesId")) {
+                // throw new Error("No User ID provided.");
+                const coursesId = searchParameters.get("coursesId");
+
+                document.getElementById("messagecontainer").innerHTML = "Course created with ID: " + coursesId;
+
+            } else {
+                document.getElementById("messagecontainer").innerHTML = "";
+            }
+
+        }
 
         function buildCoursesTableRow(courses) {
             let row = document.createElement("tr");
@@ -84,22 +103,16 @@
             row.appendChild(cell7);
 
             let cell8 = document.createElement("td");
-
             let anchorEdit = document.createElement("a");
-
-            anchorEdit.href = `edit.html?todosId=${courses.id}`;
+            anchorEdit.href = `edit.html?coursesId=${courses.id}`;
             anchorEdit.innerText = "Edit";
             cell8.appendChild(anchorEdit);
 
             let anchorDelete = document.createElement("a");
-            anchorDelete.href = `confirm-delete.html?Id=${courses.id}`;
+            anchorDelete.href = `confirm-delete.html?coursesId=${courses.id}`;
             anchorDelete.innerText = "|Delete";
             cell8.appendChild(anchorDelete);
             row.appendChild(cell8);
-
-
-
-
 
         }
     </script>

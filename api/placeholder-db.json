@@ -40022,12 +40022,6 @@
       "id": 28
     },
     {
-      "name": "abcdef",
-      "title": "kkkkkkkkkkkkkkk",
-      "completed": "false",
-      "id": 29
-    },
-    {
       "name": "pate",
       "title": "kanchan",
       "completed": "true",
@@ -40165,17 +40159,27 @@
       "id": "234",
       "title": "Kanchan Pate G",
       "completed": "true"
+    },
+    {
+      "id": "pHMlYGs",
+      "title": "",
+      "completed": ""
+    },
+    {
+      "id": "133",
+      "title": "dddd",
+      "completed": "ddd"
     }
   ],
   "courses": [
     {
       "id": 1,
-      "dept": "CompSci",
-      "courseNum": 101,
-      "courseName": "HTML5 and CSS3",
+      "dept": "CompScience",
+      "courseNum": "101",
+      "courseName": "HTML5 & CSS3",
       "instructor": "Rob",
-      "startDate": "July 8",
-      "numDays": 10
+      "startDate": "July 18",
+      "numDays": "19"
     },
     {
       "id": 2,
@@ -40313,15 +40317,6 @@
       "numDays": 5
     },
     {
-      "dept": "sd",
-      "courseNum": "",
-      "courseName": "",
-      "instructor": "",
-      "startDate": "",
-      "numDays": "",
-      "id": 17
-    },
-    {
       "dept": "dfd",
       "courseNum": "",
       "courseName": "",
@@ -40331,13 +40326,13 @@
       "id": 18
     },
     {
-      "dept": "f",
-      "courseNum": "",
-      "courseName": "",
-      "instructor": "",
-      "startDate": "",
-      "numDays": "",
-      "id": 19
+      "id": 19,
+      "dept": "finearts",
+      "courseNum": "12",
+      "courseName": "FineArt",
+      "instructor": "Kanchan",
+      "startDate": "June 7",
+      "numDays": "90"
     },
     {
       "id": 20
@@ -40350,6 +40345,42 @@
       "startDate": "",
       "numDays": "1",
       "id": 21
+    },
+    {
+      "id": "25",
+      "dept": "CSE",
+      "courseNum": "225",
+      "courseName": "Engineering",
+      "instructor": "Kanchan",
+      "startDate": "4October",
+      "numDays": "30"
+    },
+    {
+      "id": "50",
+      "dept": "Biology",
+      "courseNum": "100",
+      "courseName": "Doctorate",
+      "instructor": "Pate",
+      "startDate": "12February",
+      "numDays": "16"
+    },
+    {
+      "id": "77",
+      "dept": "77",
+      "courseNum": "77",
+      "courseName": "77",
+      "instructor": "77",
+      "startDate": "77",
+      "numDays": "77"
+    },
+    {
+      "id": "1212",
+      "dept": "1212",
+      "courseNum": "1212",
+      "courseName": "1212",
+      "instructor": "1212",
+      "startDate": "1212",
+      "numDays": "1212"
     }
   ],
   "categories": [
